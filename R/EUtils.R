@@ -18,6 +18,7 @@ EUtilsQuery <- function(query,type="esearch",db="pubmed",...){
 
 	# PARTIAL MATCH OF POSSIBLE LIMITS
 	OPTIONS <- c(
+		"api_key",
 		"retstart",
 		"retmax",
 		"rettype",
@@ -35,7 +36,8 @@ EUtilsQuery <- function(query,type="esearch",db="pubmed",...){
 	}
 	else{
 		WhichArgs <- pmatch(names(ArgList),OPTIONS)	
-		if(any(is.na(WhichArgs))||sapply(WhichArgs,length)>1)
+		# Checks if any of the provided arguments are NA or if length of any arg greater than 1
+		if(any(is.na(WhichArgs)) || any(sapply(WhichArgs, length) > 1))
 			stop("Error in specified limits.")
 		names(ArgList) <- OPTIONS[WhichArgs]
 		if(all(names(ArgList)!="retmax"))
